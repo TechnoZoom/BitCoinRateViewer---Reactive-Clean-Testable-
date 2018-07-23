@@ -1,6 +1,6 @@
 package com.kapil.bitcoinrateviewer.di;
 
-import com.kapil.bitcoinrateviewer.MainActivity;
+import com.kapil.bitcoinrateviewer.presentation.MainActivity;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;

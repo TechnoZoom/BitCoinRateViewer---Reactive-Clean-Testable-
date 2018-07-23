@@ -2,6 +2,7 @@ package com.kapil.bitcoinrateviewer;
 
 import com.kapil.bitcoinrateviewer.constants.ServerConfig;
 import com.kapil.bitcoinrateviewer.util.AssetReaderUtil;
+import com.kapil.core.commons.BaseUrlChangingInterceptor;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
 import static com.github.tomakehurst.wiremock.client.WireMock.get;

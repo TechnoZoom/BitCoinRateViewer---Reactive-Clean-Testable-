@@ -1,7 +1,6 @@
 package com.kapil.bitcoinrateviewer.di;
 
-import com.kapil.bitcoinrateviewer.BitCoinRateViewFragment;
-
+import bakshi.kapil.com.bitcoinpricetracker.presentation.BitCoinRateViewFragment;
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
 

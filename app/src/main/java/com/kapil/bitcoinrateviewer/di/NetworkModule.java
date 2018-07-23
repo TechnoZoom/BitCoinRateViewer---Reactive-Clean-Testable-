@@ -2,14 +2,16 @@ package com.kapil.bitcoinrateviewer.di;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.TypeAdapterFactory;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
-import com.kapil.bitcoinrateviewer.BaseUrlChangingInterceptor;
-import com.kapil.bitcoinrateviewer.BitCoinTypeAdapterFactory;
 import com.kapil.bitcoinrateviewer.BuildConfig;
-import com.kapil.bitcoinrateviewer.Constants.ServerEndPoints;
+import com.kapil.core.commons.BaseUrlChangingInterceptor;
+
+import java.util.Set;
 
 import javax.inject.Singleton;
 
+import bakshi.kapil.com.bitcoinpricetracker.Constants.ServerEndPoints;
 import dagger.Module;
 import dagger.Provides;
 import okhttp3.OkHttpClient;
@@ -27,7 +29,7 @@ public class NetworkModule {
 
     @Singleton
     @Provides
-    public BitCoinService provideBitCoinService(Gson gson) {
+    public Retrofit provideRetrofit(Gson gson) {
 
         OkHttpClient.Builder httpClient;
         httpClient = new OkHttpClient.Builder();
@@ -44,18 +46,18 @@ public class NetworkModule {
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .client(okHttpClient)
-                .build()
-                .create(BitCoinService.class);
+                .build();
     }
 
-    @Singleton
     @Provides
-    public Gson provideGson() {
-        return new GsonBuilder()
-                .registerTypeAdapterFactory(BitCoinTypeAdapterFactory.create())
-                .create();
+    @Singleton
+    static Gson provideGson(Set<TypeAdapterFactory> typeAdapters) {
+        final GsonBuilder builder = new GsonBuilder();
 
-
+        for (TypeAdapterFactory factory : typeAdapters) {
+            builder.registerTypeAdapterFactory(factory);
+        }
+        return builder.create();
     }
 
 }

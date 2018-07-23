@@ -2,7 +2,7 @@ package com.kapil.bitcoinrateviewer.di;
 
 import android.app.Application;
 
-import com.kapil.bitcoinrateviewer.BitCoinApp;
+import com.kapil.bitcoinrateviewer.appilcation.BitCoinApp;
 
 import javax.inject.Singleton;
 

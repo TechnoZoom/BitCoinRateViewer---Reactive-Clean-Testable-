@@ -7,7 +7,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 
-import com.kapil.bitcoinrateviewer.BitCoinApp;
+import com.kapil.bitcoinrateviewer.appilcation.BitCoinApp;
+import com.kapil.core.di.Injectable;
 
 import dagger.android.AndroidInjection;
 import dagger.android.support.AndroidSupportInjection;

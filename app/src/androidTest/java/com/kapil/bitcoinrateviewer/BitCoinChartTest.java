@@ -9,8 +9,7 @@ import com.github.tomakehurst.wiremock.junit.WireMockRule;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.kapil.bitcoinrateviewer.bitcoinchart.JsonUtils;
-import com.kapil.bitcoinrateviewer.di.BitCoinRate;
-import com.kapil.bitcoinrateviewer.di.BitCoinRateResponse;
+import com.kapil.bitcoinrateviewer.presentation.MainActivity;
 
 import org.junit.BeforeClass;
 import org.junit.Rule;
@@ -19,14 +18,19 @@ import org.junit.runner.RunWith;
 
 import java.util.List;
 
+import bakshi.kapil.com.bitcoinpricetracker.data.BitCoinPriceTypeFactory;
+import bakshi.kapil.com.bitcoinpricetracker.data.BitCoinRate;
+import bakshi.kapil.com.bitcoinpricetracker.data.BitCoinRateMapper;
+import bakshi.kapil.com.bitcoinpricetracker.data.BitCoinRateResponse;
+
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig;
+import static junit.framework.Assert.assertEquals;
 import static org.hamcrest.Matchers.allOf;
-import static org.junit.Assert.assertEquals;
 
 @RunWith(AndroidJUnit4.class)
 public class BitCoinChartTest {
@@ -41,7 +45,7 @@ public class BitCoinChartTest {
     @BeforeClass
     public static void setUp() {
         gson = new GsonBuilder()
-                .registerTypeAdapterFactory(BitCoinTypeAdapterFactory.create())
+                .registerTypeAdapterFactory(BitCoinPriceTypeFactory.create())
                 .create();
     }
 
@@ -88,7 +92,7 @@ public class BitCoinChartTest {
         BitCoinRateStubber.stubWeeklyBitCoinResponse();
         reloadActivity();
         LineChart lineChart = mActivityTestRule.getActivity().findViewById(R.id.bit_coin_line_chart);
-        BitCoinRateResponse bitCoinRateResponse = gson.fromJson(JsonUtils.getResponseFromJsonFile("bitcoin_rate_response.json"),
+        bakshi.kapil.com.bitcoinpricetracker.data.BitCoinRateResponse bitCoinRateResponse = gson.fromJson(JsonUtils.getResponseFromJsonFile("bitcoin_rate_response.json"),
                 BitCoinRateResponse.class);
         checkYLabeling(bitCoinRateResponse.bitCoinRateList(), lineChart);
     }
