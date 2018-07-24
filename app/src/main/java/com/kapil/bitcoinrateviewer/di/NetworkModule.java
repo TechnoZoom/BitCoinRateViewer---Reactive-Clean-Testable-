@@ -29,7 +29,20 @@ public class NetworkModule {
 
     @Singleton
     @Provides
-    public Retrofit provideRetrofit(Gson gson) {
+    public Retrofit provideRetrofit(Gson gson, OkHttpClient okHttpClient) {
+
+
+        return new Retrofit.Builder()
+                .baseUrl(ServerEndPoints.BLOCKCHAIN_BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .client(okHttpClient)
+                .build();
+    }
+
+    @Singleton
+    @Provides
+    public OkHttpClient provideOkHttpClient(Gson gson) {
 
         OkHttpClient.Builder httpClient;
         httpClient = new OkHttpClient.Builder();
@@ -40,13 +53,7 @@ public class NetworkModule {
             httpClient.addInterceptor(logging);
         }
         httpClient.addInterceptor(BaseUrlChangingInterceptor.get());
-        OkHttpClient okHttpClient = httpClient.build();
-        return new Retrofit.Builder()
-                .baseUrl(ServerEndPoints.BLOCKCHAIN_BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .client(okHttpClient)
-                .build();
+        return httpClient.build();
     }
 
     @Provides

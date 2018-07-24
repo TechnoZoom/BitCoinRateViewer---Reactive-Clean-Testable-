@@ -53,11 +53,11 @@ dependencies {
     androidTestImplementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
 
 
-
-    androidTestImplementation("com.github.tomakehurst:wiremock:2.0.8-beta") {
+    androidTestImplementation("com.github.tomakehurst:wiremock:2.18.0") {
         exclude group: 'org.apache.httpcomponents', module: 'httpclient'
         exclude group: 'asm', module: 'asm'
         exclude group: 'org.json', module: 'json'
+        exclude group: 'com.google.guava', module:'guava'
     }
 
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:2.2.2'

@@ -41,7 +41,6 @@ public class BitCoinChartTest {
     @Rule
     public WireMockRule wireMockRule = new WireMockRule(wireMockConfig().port(8080));
     private static Gson gson;
-
     @BeforeClass
     public static void setUp() {
         gson = new GsonBuilder()
@@ -87,6 +86,17 @@ public class BitCoinChartTest {
         checkXLabeling(bitCoinRateResponse.bitCoinRateList(), lineChart);
     }
 
+    private void checkXLabeling(List<BitCoinRate> bitCoinRateList, LineChart lineChart) {
+        BitCoinRateMapper bitCoinRateMapper = new BitCoinRateMapper();
+        for (int i = 0; i < bitCoinRateList.size(); i++) {
+            try {
+                assertEquals(bitCoinRateMapper.apply(bitCoinRateList.get(i)).date(), lineChart.getXAxis().getFormattedLabel(i));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     @Test
     public void onCorrectResponse_checkIfChartYDataValuesAreCorrect() {
         BitCoinRateStubber.stubWeeklyBitCoinResponse();
@@ -96,7 +106,6 @@ public class BitCoinChartTest {
                 BitCoinRateResponse.class);
         checkYLabeling(bitCoinRateResponse.bitCoinRateList(), lineChart);
     }
-
 
     private void checkYLabeling(List<BitCoinRate> bitCoinRateList, LineChart lineChart) {
         BitCoinRateMapper bitCoinRateMapper = new BitCoinRateMapper();
@@ -110,22 +119,9 @@ public class BitCoinChartTest {
         }
     }
 
-
-    private void checkXLabeling(List<BitCoinRate> bitCoinRateList, LineChart lineChart) {
-        BitCoinRateMapper bitCoinRateMapper = new BitCoinRateMapper();
-        for (int i = 0; i < bitCoinRateList.size(); i++) {
-            try {
-                assertEquals(bitCoinRateMapper.apply(bitCoinRateList.get(i)).date(), lineChart.getXAxis().getFormattedLabel(i));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
     private void reloadActivity() {
         Intent intent = new Intent();
         mActivityTestRule.launchActivity(intent);
     }
-
 
 }

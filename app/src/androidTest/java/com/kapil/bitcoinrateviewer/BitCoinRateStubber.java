@@ -17,7 +17,7 @@ public class BitCoinRateStubber {
 
     public static void stubBitCoinRateResponseWithError(int errorCode) {
         String url = "/charts/market-price";
-        BaseUrlChangingInterceptor.get().setInterceptor(ServerConfig.BLOCKCHAIN_BASE_URL + url);
+        BaseUrlChangingInterceptor.get().setInterceptor(ServerConfig.LOCAL_HOST + url);
         stubFor(get(urlPathMatching(url))
                 .willReturn(aResponse()
                         .withStatus(errorCode)
@@ -26,7 +26,7 @@ public class BitCoinRateStubber {
 
     public static void stubWeeklyBitCoinResponse() {
         String url = "/charts/market-price";
-        BaseUrlChangingInterceptor.get().setInterceptor(ServerConfig.BLOCKCHAIN_BASE_URL + url);
+        BaseUrlChangingInterceptor.get().setInterceptor(ServerConfig.LOCAL_HOST + url);
         String jsonBody = AssetReaderUtil.asset("bitcoin_rate_response.json");
         stubFor(get(urlPathMatching(url))
                 .willReturn(aResponse()

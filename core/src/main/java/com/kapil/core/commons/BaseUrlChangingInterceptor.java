@@ -14,8 +14,7 @@ import okhttp3.Response;
 //@Singleton
 public class BaseUrlChangingInterceptor implements Interceptor {
     private static BaseUrlChangingInterceptor sInterceptor;
-    private String mScheme;
-    private String mHost;
+
     private HttpUrl httpUrl;
 
     public static BaseUrlChangingInterceptor get() {
